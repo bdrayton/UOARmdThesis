@@ -4,3 +4,15 @@ cache*/
 *.log
 *.run.xml
 *.bbl
+_book/
+_bookdown_files/
+thesis.Rmd
+thesis.aux
+thesis.bcf
+thesis.knit.md
+thesis.out
+thesis.tex
+thesis.toc
+thesis.lof
+thesis.lot
+thesis.blg
