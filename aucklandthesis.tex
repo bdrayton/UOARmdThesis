@@ -3,7 +3,7 @@
 % This template was produced by Rob Hyndman
 % Version: 6 September 2016
 
-\documentclass{aucklandthesis}
+\documentclass[doubleside,doublespace]{aucklandthesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Add any LaTeX packages and other preamble here if required
@@ -31,11 +31,15 @@
 
 \titlepage
 
-{\setstretch{1.2}\sf\tighttoc\doublespacing}
+\includepdf{thesisconsent.pdf}
 
 $body$
 
+
+\begingroup
+\setstretch{1.0}
 \printbibliography[heading=bibintoc]
+\endgroup
 
 
 

@@ -30,17 +30,20 @@
 \ProcessOptions
 
 \ifsingleside@%
-  \LoadClass[a4paper,oneside,openany,draft,11pt]{report}
+  \LoadClass[a4paper,oneside,openany,draft,12pt]{report}
 \else%
-  \LoadClass[a4paper,11pt,openright,twoside]{report}
+  \LoadClass[a4paper,12pt,openright,twoside]{report}
 \fi%
 
 %% Page dimensions
 \ifsingleside@%
-  \usepackage[a4paper,left=3.5cm,right=2.5cm,top=2.5cm,bottom=3.5cm]{geometry}
+  \usepackage[a4paper,left=2.15cm,right=1.75cm,top=2.25cm,bottom=2.25cm,headsep=0.75cm,footskip=1cm]{geometry}
 \else%
-  \usepackage[a4paper,left=3.5cm,right=2.5cm,top=2.5cm,bottom=3.5cm,twoside]{geometry}
+  \usepackage[a4paper,inner=2.15cm,outer=1.75cm,top=2.25cm,bottom=2.25cm,headsep=0.75cm,footskip=1cm]{geometry}
 \fi%
+
+%% No hyphenation
+\usepackage[none]{hyphenat}
 
 %% CAPTIONS
 \RequirePackage{caption}
@@ -48,6 +51,9 @@
  {labelfont={bf},textfont={it},labelsep=colon}
 \captionsetup[figure]{style=italic,format=hang,singlelinecheck=true}
 \captionsetup[table]{style=italic,format=hang,singlelinecheck=true}
+
+%% LISTS
+\usepackage{enumitem}
 
 %% HEADERS AND FOOTERS
 \RequirePackage{fancyhdr}
@@ -62,9 +68,9 @@
 \renewcommand{\footrulewidth}{0.4pt}
 \fancypagestyle{plain}{%
 \fancyhf{} % clear all header and footer fields
-\fancyfoot[C]{\sf\thepage} % except the center
+\fancyfoot[r]{\Large\sf\raisebox{-0.1cm}{\textbf{\thepage}}}
 \renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}}
+\renewcommand{\footrulewidth}{0.4pt}}
 
 %% MATHS
 \RequirePackage{bm,amsmath}
@@ -84,6 +90,12 @@
 
 %% SECTION TITLES
 \RequirePackage[compact,sf,bf]{titlesec}
+% \titleformat{\chapter}[hang]
+%   {\filright\bfseries\sffamily\setstretch{0.5}}
+%   {\chaptertitlename \thechapter}{0pt}{\LARGE}
+\titleformat{\chapter}[display]
+  {\filright\huge\bfseries\sffamily\setstretch{1.0}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
 \titleformat{\section}[block]
   {\fontsize{15}{17}\bfseries\sffamily}
   {\thesection}
@@ -96,6 +108,13 @@
 \titlespacing{\subsubsection}{0pt}{1ex}{0ex}
 \titleformat{\subsubsection}{\bf}{}{0ex}{}
 
+% Shenanigans for abstract and acknowledgements...
+\titlespacing{name=\chapter,numberless}{0pt}{-36pt}{0pt}
+
+%% checkmark and crossmark
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 %% SPACING
 \RequirePackage{setspace}
@@ -112,6 +131,7 @@
 %% BIBLIOGRAPHY
 \usepackage[style=authoryear-comp, backend=biber, natbib=true]{biblatex}
 \ExecuteBibliographyOptions{bibencoding=utf8,minnames=1,maxnames=3, maxbibnames=99,dashed=false,terseinits=true,giveninits=true,uniquename=false,uniquelist=false,doi=false, isbn=false,url=true,sortcites=false}
+\setlength{\bibitemsep}{\baselineskip}
 
 \DeclareFieldFormat{url}{\url{#1}}
 \DeclareFieldFormat[article]{pages}{#1}
@@ -146,7 +166,7 @@
 \setlength{\parindent}{0em}
 
 %% HYPERLINKS
-\RequirePackage{xcolor} % Needed for links
+\RequirePackage[table, x11names, dvipsnames]{xcolor} % Needed for links
 \definecolor{darkblue}{rgb}{0,0,.6}
 \RequirePackage{url}
 \RequirePackage[citecolor=0 0 0,colorlinks=false]{hyperref}
@@ -183,16 +203,18 @@
 \def\titlepage{{\sf
     \thispagestyle{empty}%
     \null\vskip1cm%
-    \includegraphics[width=15cm]{figures/uni-of-auckland}
-    \vfill
+    %\includegraphics[width=15cm]{figures/uni-of-auckland}
+    %\vfill
+    \vspace{6em}%
     \begin{center}
         \Large\textbf{\expandafter{\@title}}\\
         \@author\\
         \@degrees
     \vfill
-        A thesis submitted for the degree of \degreetitle { } at\\
-        the University of Auckland in \@submitdate\\
-        Department of Statistics
+        A thesis submitted in fulfilment of the requirements for the degree of Doctor of Philosophy in Statistics, the University of Auckland, 2022. This thesis is for examination purposes only and is confidential to the examination process.
+        %A thesis submitted in fulfilment of the requirements for the degree of \degreetitle { }at\\
+        %the University of Auckland in \@submitdate\\
+        %Department of Statistics
     \end{center}
     %\hrulefill
     \newpage\mbox{}\thispagestyle{empty}\newpage}}
@@ -200,7 +222,7 @@
 \numberwithin{section}{chapter}
 \numberwithin{equation}{chapter}
 
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{2}
 
 \def\prefacesection#1{%
     \chapter*{#1}
@@ -233,6 +255,22 @@
 \renewcommand{\cftsecfont}{\sffamily}
 \renewcommand{\cftsubsecfont}{\sffamily}
 \renewcommand{\cfttoctitlefont}{\fontsize{24}{28}\sffamily\bfseries}
+
+
+%% Fancyhdr warnings
+\setlength{\headheight}{26.64757pt}
+\addtolength{\topmargin}{-11.64757pt}
+
+%% LIST OF FIGURES / LIST OF TABLES
+\renewcommand\cftloftitlefont{\fontsize{24}{28}\sffamily\bfseries}
+\renewcommand\cftlottitlefont{\fontsize{24}{28}\sffamily\bfseries}
+
+
+%% rotating?
+\usepackage{rotating}
+
+%% Consent Form...
+\usepackage{pdfpages}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Extra stuff for Rmarkdown to work
